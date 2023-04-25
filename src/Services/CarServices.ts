@@ -29,4 +29,9 @@ export default class CarServices {
     const result = car.map((e) => this.createCarDomain(e));
     return result;
   }
+
+  public async update(id: string, car: ICar) {
+    const carUpdate = await this._model.update(id, car);
+    return this.createCarDomain(carUpdate);
+  }
 }
