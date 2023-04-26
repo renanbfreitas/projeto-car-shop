@@ -29,4 +29,9 @@ export default class MotorcycleServices {
     const result = moto.map((e) => this.createMotorcycleDomain(e));
     return result;
   }
+
+  public async update(id: string, car: IMotorcycle) {
+    const motoUpdate = await this._model.update(id, car);
+    return this.createMotorcycleDomain(motoUpdate);
+  }
 }
