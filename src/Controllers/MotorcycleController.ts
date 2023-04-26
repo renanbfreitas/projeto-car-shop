@@ -12,4 +12,27 @@ export default class MotorcycleController {
       next(error);
     }
   }
+
+  public async findAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const allMotorcycles = await this._service.findAll();
+      return res.status(200).json(allMotorcycles);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  public async findById(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const motoExist = await this._service.findById(id);
+
+      if (!motoExist) return res.status(422).json({ message: 'Invalid mongo id' });
+      if (motoExist.length === 0) return res.status(404).json({ message: 'Motorcycle not found' });
+
+      return res.status(200).json(motoExist[0]);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
